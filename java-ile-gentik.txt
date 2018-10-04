@@ -1,0 +1,600 @@
+import jdk.nashorn.internal.ir.ForNode;
+
+import java.lang.reflect.Array;
+import java.util.Random;
+import java.util.*;
+
+public class GenetikAlgoritma {
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String Kirmizi = "\u001B[31m";
+
+    public  Random   r=new Random(); //random sýnýfý
+    public  static   int  rastGele;
+    public  static   int  rastGele2;
+    public  static   int [] kramazon= new int [5] ;
+    public  static   int [] Bireyler= new int [10] ;
+    public  static   String  Carpazlanacak1;
+    public  static   String  Carpazlanacak2;
+
+
+    public  static   int Birey1;
+    public  static   int Birey2;
+    public  static   int Birey3;
+    public  static   int Birey4;
+    public  static   int Birey5;
+    public  static   int Birey6;
+    public  static   int Birey7;
+    public  static   int Birey8;
+    public  static   int Birey9;
+    public  static   int Birey10;
+
+    public  static   String Yedek_Birey1;
+    public  static   String Yedek_Birey2;
+    public  static   String Yedek_Birey3;
+    public  static   String Yedek_Birey4;
+    public  static   String Yedek_Birey5;
+    public  static   String Yedek_Birey6;
+    public  static   String Yedek_Birey7;
+    public  static   String Yedek_Birey8;
+    public  static   String Yedek_Birey9;
+    public  static   String Yedek_Birey10;
+
+    public  static   int UygunlukDeger_Birey1;
+    public  static   int UygunlukDeger_Birey2;
+    public  static   int UygunlukDeger_Birey3;
+    public  static   int UygunlukDeger_Birey4;
+    public  static   int UygunlukDeger_Birey5;
+
+    public  static   int [ ] Kromozon_Birey1= new int [6] ;
+    public  static   int [ ] Kromozon_Birey2= new int [6] ;
+    public  static   int [ ] Kromozon_Birey3= new int [6] ;
+    public  static   int [ ] Kromozon_Birey4= new int [6] ;
+    public  static   int [ ] Kromozon_Birey5= new int [6] ;
+
+    public  static   int [ ] Kromozon_Birey1_Yedek= new int [6] ;
+    public  static   int [ ] Kromozon_Birey2_Yedek= new int [6] ;
+    public  static   int [ ] Kromozon_Birey3_Yedek= new int [6] ;
+    public  static   int [ ] Kromozon_Birey4_Yedek= new int [6] ;
+    public  static   int [ ] Kromozon_Birey5_Yedek= new int [6] ;
+    public  static   int [][] Kromozonlar = new int[7][5];
+    public  static   int [][] Kromozonlar2 = new int[7][5];
+    public  static   int [][] ButunKromozomlar = new int[14][5];
+    public  static   int [] Temp = new int[5];
+
+    public  static   double uygunlukToplam;
+
+    public  static   double  SecimDegeri_Birey1 ;
+    public  static   double  SecimDegeri_Birey2 ;
+    public  static   double  SecimDegeri_Birey3 ;
+    public  static   double  SecimDegeri_Birey4 ;
+    public  static   double  SecimDegeri_Birey5 ;
+
+
+    public  static   double yüzdelikBirey1 ;
+    public  static   double yüzdelikBirey2 ;
+    public  static   double yüzdelikBirey3 ;
+    public  static   double yüzdelikBirey4 ;
+    public  static   double yüzdelikBirey5 ;
+
+    public  static   int   Kopya_Birey1 ;
+    public  static   int   Kopya_Birey2 ;
+    public  static   int   Kopya_Birey3 ;
+    public  static   int   Kopya_Birey4 ;
+    public  static   int   Kopya_Birey5 ;
+
+    public  static   double CarpazlamaSayýsý=5*0.4;//  populasyon sayýsý * çarpazlama oraný
+
+    public static  double BeklenenOrt;
+
+///************  IÞLEMLEMRÝMÝ YAPTIGIM FONKSÝYONLAR
+
+    public GenetikAlgoritma() {
+        Random r = new Random();
+
+        Birey1=r.nextInt(32);
+        Birey2=r.nextInt(32);
+        Birey3=r.nextInt(32);
+        Birey4=r.nextInt(32);
+        Birey5=r.nextInt(32);
+        System.out.println("Bireylerimin Random olarak girilen  baþlangýc degerleri");
+        for (int i = 0; i <5 ; i++) {
+            if (i == 0) {
+                System.out.println(Birey1);
+            }
+            if (i == 1) {
+                System.out.println(Birey2);
+            }
+            if (i == 2) {
+                System.out.println(Birey3);
+            }
+            if (i == 3) {
+                System.out.println(Birey4);
+            }
+            if (i == 4) {
+                System.out.println(Birey5);
+            }
+        }
+        System.out.println("----------------------------------------------------------");
+
+    }   //Random ilk Bireylerin ilk degerlerini burdan girdim .
+    public static   void     Ilkislemler(){
+
+        Random r = new Random();
+
+        for (int i = 0; i <1001; i++) {
+
+
+
+        toBinary(Birey1,Kromozon_Birey1);
+        toBinary(Birey2,Kromozon_Birey2);
+        toBinary(Birey3,Kromozon_Birey3);
+        toBinary(Birey5,Kromozon_Birey5);
+        toBinary(Birey4,Kromozon_Birey4);
+
+        tasý(Kromozonlar,Kromozon_Birey1,Kromozon_Birey2,Kromozon_Birey3,Kromozon_Birey4,Kromozon_Birey5);  // matrise attým bütün kramozomlarý
+        print2();
+        UygunlukDeger_Birey1=UygunlukFonk(Birey1);
+        UygunlukDeger_Birey2=UygunlukFonk(Birey2);
+        UygunlukDeger_Birey3=UygunlukFonk(Birey3);
+        UygunlukDeger_Birey4=UygunlukFonk(Birey4);
+        UygunlukDeger_Birey5=UygunlukFonk(Birey5);
+
+        uygunlukToplam=UygunlukToplama();
+
+        SecimDegeri_Birey1=UygunlukDeger_Birey1/uygunlukToplam;
+        SecimDegeri_Birey2=UygunlukDeger_Birey2/uygunlukToplam;
+        SecimDegeri_Birey3=UygunlukDeger_Birey3/uygunlukToplam;
+        SecimDegeri_Birey4=UygunlukDeger_Birey4/uygunlukToplam;
+        SecimDegeri_Birey5=UygunlukDeger_Birey5/uygunlukToplam;
+
+        yüzdelikBirey1=(UygunlukDeger_Birey1*360)/uygunlukToplam;
+        yüzdelikBirey2=(UygunlukDeger_Birey2*360)/uygunlukToplam;
+        yüzdelikBirey3=(UygunlukDeger_Birey3*360)/uygunlukToplam;
+        yüzdelikBirey4=(UygunlukDeger_Birey4*360)/uygunlukToplam;
+        yüzdelikBirey5=(UygunlukDeger_Birey5*360)/uygunlukToplam;
+
+        BeklenenOrt=uygunlukToplam/5;
+
+        Kopya_Birey1=(int)Math.round( UygunlukDeger_Birey1/BeklenenOrt);
+        Kopya_Birey2=(int)Math.round(UygunlukDeger_Birey2/BeklenenOrt);
+        Kopya_Birey3=(int)Math.round(UygunlukDeger_Birey3/BeklenenOrt);
+        Kopya_Birey4=(int)Math.round(UygunlukDeger_Birey4/BeklenenOrt);
+        Kopya_Birey5=(int)Math.round(UygunlukDeger_Birey5/BeklenenOrt);
+        System.out.println("----------------------------------------------------------");
+        System.out.println("------------Bireylerin---kopya---sayýsý-------------------");
+        System.out.println("Birey1= "+Kopya_Birey1+"  Birey2= "+Kopya_Birey2+" Birey3= "+Kopya_Birey3+" Birey4= "+Kopya_Birey4+" Birey5= "+Kopya_Birey5);
+
+        CaprazlamaHavuzu(Kromozonlar,Kopya_Birey1,Kopya_Birey2,Kopya_Birey3,Kopya_Birey4,Kopya_Birey5);
+
+        int satýr1=r.nextInt(5)+1;
+        int satýr2=r.nextInt(5)+1;
+        carpazalama( Kromozonlar2);
+        carpazalama( Kromozonlar2 );
+        System.out.println("Caprazlamardan sonraki kromozomlarým");
+        print();
+
+        System.out.println("Mutasyondan sonraki kromozomlarýmýn son hali");
+        Mutasyon();
+
+
+
+        EbebeyinleriTopla();
+
+        KromozomlarýStringeDonus();
+        BireyleriBirArayaTopla();
+        EnBuyukBireyleriAl();
+
+
+        }
+
+
+
+
+
+    } // ikiliye cevirdim bireylerimi  ,Uygunluk deger , Secim degeri , Rulet Çemberi degeri ,Birey kopya sayýsý , Caprazlama Havuzu ,caprazla , mutasyon  , Papulasyonu güncelle
+    public static   void     CaprazlamaHavuzu(int [][] Kromazonlarýmýz,int  Kopya_Birey1,int  Kopya_Birey2,int  Kopya_Birey3 ,int  Kopya_Birey4,int  Kopya_Birey5) {
+        int  sayac=0;
+
+        for (int i = 0; i <Kopya_Birey1 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+            Kromozonlar2[sayac][j]= Kromozonlar[0][j];
+               }
+               sayac++;
+        }
+
+        for (int i = 0; i <Kopya_Birey2 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                Kromozonlar2[sayac][j]= Kromozonlar[1][j];
+            }
+            sayac++;
+        }
+
+        for (int i = 0; i <Kopya_Birey3 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                Kromozonlar2[sayac][j]= Kromozonlar[2][j];
+            }
+            sayac++;
+        }
+
+
+        for (int i = 0; i <Kopya_Birey4 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                Kromozonlar2[sayac][j]= Kromozonlar[3][j];
+            }
+            sayac++;
+        }
+
+
+        for (int i = 0; i <Kopya_Birey5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                Kromozonlar2[sayac][j]= Kromozonlar[4][j];
+            }
+            sayac++;
+        }
+
+   System.out.println("-----------Kopya havuzundan elde edilen Yeni kromozomlar---------------");
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+               System.out.print(Kromozonlar2[i][j]);
+               }
+
+           System.out.println();
+        }
+        System.out.println("--------------------------------------");
+    }
+    public static   int[]    toBinary(int number, int [] Kromozom ){
+        int ia=4;
+        //This program calculates just positive integers
+        if(number<=-1){
+            return null;
+        }
+        //Necessary calculation to convert decimal to binary
+        java.lang.String binary ="";
+        while(number>0){
+            int remaining = number%2;
+            Kromozom[ia]=remaining;
+            ia--;
+            binary=remaining+binary;
+            number/=2;
+        }
+        binary = number+binary;
+        //kramazon
+
+
+      return kramazon;
+    }
+    public static   int      UygunlukFonk(int number)
+    {
+     return number*number;
+    }
+    public static   int      UygunlukToplama(){
+        System.out.println("----------------------------------------------------------");
+        int toplam=UygunlukDeger_Birey1+UygunlukDeger_Birey2+UygunlukDeger_Birey3+UygunlukDeger_Birey4+UygunlukDeger_Birey5;
+        System.out.println("Uygunluk degerinin toplammý= "+toplam);
+
+        return  toplam;
+    }
+    public static   void     tasý(int [][] kaynak  ,int [] hedef1,int [] hedef2,int [] hedef3,int [] hedef4,int [] hedef5  )  {
+
+        for (int i = 0; i <kaynak.length ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                if (i == 0) {
+                    Kromozonlar[i][j]= Kromozon_Birey1[j];
+                }
+                if (i == 1) {
+                    Kromozonlar[i][j]= Kromozon_Birey2[j];
+                }
+                if (i ==2) {
+                    Kromozonlar[i][j]= Kromozon_Birey3[j];
+                }
+                if (i == 3) {
+                    Kromozonlar[i][j]= Kromozon_Birey4[j];
+                }
+                if (i == 4) {
+                    Kromozonlar[i][j]= Kromozon_Birey5[j];
+                }
+            }
+        }
+    }//Kromozomlarý matrise koyaladým
+    public static   void     carpazalama(int diziKramazon [] []) {
+       Random r = new Random();
+       int  satýr1=r.nextInt(4)+1;
+       int  satýr2=r.nextInt(4)+1;
+
+        System.out.println(" caprazlama Kromozom"+(satýr1+1)+"  Kromozom"+(satýr2+1));
+
+        for (int i = 0; i <5 ; i++) {
+            Temp[i] = Kromozonlar2[satýr1][i];
+        }
+        for (int i = 2; i <5 ; i++)
+        {
+            Kromozonlar2[satýr1][i] = Kromozonlar2[satýr2][i];
+        }
+        for (int i = 2; i <5 ; i++)
+        {
+            Kromozonlar2[satýr2][i] = Temp[i];
+        }
+
+
+    }
+    public static   void     Mutasyon ()  {
+        Random r =new Random();
+
+        int a=r.nextInt(5);
+        Mutasyon_Yapma(Kromozonlar2,a);
+        int b=r.nextInt(5);
+        if (a!=b)
+        {
+            Mutasyon_Yapma(Kromozonlar2,b);
+        }
+        else
+        {
+            b=r.nextInt(5);
+            Mutasyon_Yapma(Kromozonlar2,b);
+
+        }
+
+
+        print();
+
+    }
+    public static   void     Mutasyon_Yapma (int  [][] diziKramazon , int BireyNo  ) {
+        Random r = new Random();
+        int a=r.nextInt(5);
+
+        if (diziKramazon[BireyNo][a]==1)
+        {
+            diziKramazon[BireyNo][a]=0;
+        }
+        else
+        {
+            diziKramazon[BireyNo][a]=1;
+        }
+    }
+    public static   void     EbebeyinleriTopla() {
+        System.out.println("Krozomlarýmýný bir araya topladým çünkü  içlerinden en büyük ebeeyinleri seçmek için");
+        System.out.println("Ýlk kromaozomlarým ");
+
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                System.out.print(Kromozonlar[i][j]);
+            }
+            System.out.println();
+        }
+
+
+        System.out.println("Kopya sayýsý ve Caprazla birde Mutasyondan Sonra ki Hali");
+
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                System.out.print(Kromozonlar2[i][j]);
+            }
+            System.out.println();
+        }
+
+        System.out.println("Ve Birleþtirdim kromozomlarýmý");
+        int sayac=0;
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                ButunKromozomlar[i][j]=Kromozonlar[i][j];
+            }
+        }
+        for (int i = 5; i <10 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                ButunKromozomlar[i][j]=Kromozonlar2[sayac][j];
+
+            }
+            sayac++;
+        }
+
+        System.out.println("Ve Birleþtirdim kromozomlarýmý");
+
+        for (int i = 0; i <10 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                System.out.print(ButunKromozomlar[i][j]);
+            }
+            System.out.println();
+        }
+
+
+
+
+    }
+    public static   void     KromozomlarýStringeDonus() {
+      // Burada String olan Ýnt bir dizide olan kromozomlarý , satýr satýr  strinrin 10 tane degiþkene atama yaptým .
+
+        int  ikiliSayý,a=0,b=0,c=0,d=0,e=0;
+        int  binaryNumber, decimalNumber = 0, j = 1, remainder;
+
+        for (int i = 0; i <10 ; i++) {
+            for (int k = 0; k <5 ; k++) {
+                if (k == 0) {
+                  a=ButunKromozomlar[i][k];
+                }
+              else if  (k == 1) {
+                    b=ButunKromozomlar[i][k];
+                }
+              else  if (k == 2) {
+                    c=ButunKromozomlar[i][k];
+                }
+              else   if (k == 3) {
+                    d=ButunKromozomlar[i][k];
+                }
+                else  {
+
+                    e=ButunKromozomlar[i][k];
+                }
+            }
+            if (i == 0) {
+                  Yedek_Birey1= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 1) {
+                Yedek_Birey2= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 2) {
+                Yedek_Birey3= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 3) {
+                Yedek_Birey4= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 4) {
+                Yedek_Birey5= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 5) {
+                Yedek_Birey6= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 6) {
+                Yedek_Birey7= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 7) {
+                Yedek_Birey8= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 8) {
+                Yedek_Birey9= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+            if (i == 9) {
+                Yedek_Birey10= Integer.toString(a)+Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(e);
+            }
+
+
+
+
+
+
+
+        }
+      //  System.out.println("*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/");
+       // System.out.println(Birey1 +" "+Birey2+" "+Birey3+" "+Birey4+" "+Birey5+" ");
+      //  System.out.println("*/*/*/*/*/*/*/*/*/"+Yedek_Birey1 +" "+Yedek_Birey2+" "+" "+Yedek_Birey3+" "+" "+Yedek_Birey4+" "+Yedek_Birey5+" */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/");
+
+
+    }//Kramozon 2 matrisinde ki Binary degerlerimi  stringe attým
+    public static   void     BireyleriBirArayaTopla() {
+        for (int i = 0; i <10 ; i++) {
+            if (i == 0) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey1);
+            }
+            if (i == 1) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey2);
+            }
+            if (i == 2) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey3);
+            }
+            if (i == 3) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey4);
+            }
+            if (i == 4) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey5);
+            }
+            if (i == 5) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey6);
+            }
+            if (i == 6) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey7);
+            }
+            if (i == 7) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey8);
+            }
+            if (i == 8) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey9);
+            }
+            if (i == 9) {
+                Bireyler[i]=OnlukTabanaCevir(Yedek_Birey10);
+            }
+
+        }
+
+        Arrays.sort(Bireyler);
+
+        System.out.println("Birleþtirilmis kromozomlarýmýn onluk tabana çevirip  küçükten büyüðe sýralanmýþ hali");
+        for (int i = 0; i <10 ; i++) {
+            System.out.println(Bireyler[i]);
+        }
+
+        System.out.println("Bireylerimin En büyükleri  , bundan sonra yola devam edeceðim bireyler ");
+        for (int i = 5; i <10 ; i++) {
+            System.out.println(ANSI_GREEN+Bireyler[i]+ANSI_BLACK);
+        }
+
+    }
+    public static   int      OnlukTabanaCevir(String BinaryDizi){
+
+        int i=0,sonuc = 0,x,k[]=new int[100];
+
+        x =Integer.parseInt(BinaryDizi);
+
+        while(x>=1){
+            i++;
+            k[i]=(int) (((x%10) * Math.pow(2,i))/2);
+            x=x/10;
+            sonuc= sonuc + k[i];
+
+        }
+
+
+        return sonuc;
+
+    }
+    public static   void     EnBuyukBireyleriAl(){
+
+        for (int i = 5; i <10 ; i++) {
+            if (i == 5) {
+                Birey1=Bireyler[i];
+            }
+            if (i == 6) {
+                Birey2=Bireyler[i];
+            }
+            if (i == 7) {
+                Birey3=Bireyler[i];
+            }
+            if (i == 8) {
+                Birey4=Bireyler[i];
+            }
+            if (i == 9) {
+                Birey5=Bireyler[i];
+            }
+
+
+
+        }
+
+    }
+    public static   void     print(){
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                System.out.print(Kromozonlar2[i][j]);
+            }
+
+            System.out.println();
+        }
+        System.out.println("--------------------------------------");
+
+    }
+    public static   void     print2(){
+        System.out.println("------Ýþlemler yapýlmadan önceki kramozomlarým----------------------");
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <5 ; j++) {
+                System.out.print(Kromozonlar[i][j]);
+            }
+
+            System.out.println();
+        }
+        System.out.println("--------------------------------------");
+
+    }
+
+
+
+    public static   void    main(String[] args) {
+
+        GenetikAlgoritma a =new GenetikAlgoritma();
+
+
+        a.Ilkislemler();
+    }
+}
+
+
+
+
